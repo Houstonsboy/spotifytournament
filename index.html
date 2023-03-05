@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="backstage.css">
+    <title>Prototype</title>
+</head>
+<body>
+    <div id="tournament">
+    <article id="round-16 game">
+
+        <div id="round-16-A"></div>
+        <button id="VoteforA">AfterHours</button>
+
+
+        <div id="round-16-B"></div>
+        <button id="VoteforB">Blond</button>
+        
+    </article>
+
+
+    <article id="quarter-finals game">
+
+
+      <div id="quarter-final-A"></div>
+        <button id="quarterfinals-VoteforA">AfterHours</button>
+
+
+        <div id="quarter-final-B"></div>
+        <button id="quarterfinals-VoteforB">Blond</button>
+
+    </article>
+
+
+    <article id="semi-finals game"> <p>Jumanji</p></article>
+
+
+    <article id="finals"> <p>GameOver</p></article>
+
+
+    <article id="leadership-board">PlayAgain</article>
+
+
+    </div>
+    <button id="nextRound-btn">Next</button>
+</body>
+</html>
+
+<script>
+
+let AfterHours = [{name:`<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6b5P51m8xx2XA6U7sdNZ5E?utm_source=generator&autoplay=1" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in- picture" loading="lazy"></iframe>`,Vote:0},{ name: `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2K9Ovn1o2bTGqbsABGC6m3?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in- picture" loading="lazy"></iframe>`,Vote:0}, {name:`<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6kWxIqQDsKFYCJGbU4AjCX?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`,Vote:0}];
+
+let Blond=[{name:`<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1BViPjTT585XAhkUUrkts0?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in- picture" loading="lazy"></iframe>`,Vote:0},{name:`<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1VZLEW5ZfcAbKZ94XQiSZF?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen=""  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in- picture" loading="lazy"></iframe>`,Vote:0},{name:`<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3xKsf9qdS1CyvXSMEid6g8?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`}];
+
+let quarterfinals1=[];
+let quarterfinals2=[];
+let Semifinals1=[];
+let Finals=[];
+const NextRoundButton=document.getElementById("nextRound-btn");
+let Round16=document.getElementById("round-16 game");
+let Round16A=document.getElementById("round-16-A");
+let Round16B=document.getElementById("round-16-B");
+const VoteforA = document.getElementById("VoteforA");
+const VoteforB=document.getElementById("VoteforB");
+
+const VoteforquarterfinalsA = document.getElementById("quarterfinals-VoteforA");
+const VoteforquarterfinalsB = document.getElementById("quarterfinals-VoteforB");
+
+let index = 0;
+NextRoundButton.style.display="none";
+
+Round16A.innerHTML=AfterHours[index].name;
+Round16B.innerHTML=Blond[index].name;
+function showNextItem(list, element, nextRoundlist, list2, element2) {
+  if (index < list.length) {
+    list[index].Vote += 1;
+    nextRoundlist.push(list[index]);
+    
+    index += 1;
+    element.innerHTML = list[index].name + "<br>" + nextRoundlist.length;
+    element2.innerHTML = list2[index].name;
+  } else {
+    VoteforA.disabled = true;
+    Round16.innerHTML = nextRoundlist.length + '<p>The winners are proceeding to quarter finals</p>' + "<br>"+ list[2].Vote;
+    NextRoundButton.style.display = "block";
+  }
+}
+
+
+VoteforA.addEventListener("click", function() {
+  showNextItem(AfterHours,Round16A,quarterfinals1,Blond,Round16B);
+});
+
+VoteforB.addEventListener("click", function() {
+  showNextItem(Blond,Round16B,quarterfinals2,AfterHours,Round16A);
+});
+
+
+
+const articles = document.querySelectorAll("#tournament article");
+let currentArticleIndex = 0;
+
+// Hide all articles except the first one
+for (let i = 1; i < articles.length; i++) {
+  articles[i].style.display = "none";
+}
+
+NextRoundButton.addEventListener("click", function() {
+  // Hide the current article
+  articles[currentArticleIndex].style.display = "none";
+
+  // Increment the current article index
+  currentArticleIndex++;
+articles[currentArticleIndex].style.display = "block";
+
+
+  // If we have reached the end, display the finals article
+  if (currentArticleIndex >= articles.length - 1) {
+    articles[articles.length - 1].style.display = "block";
+  } else {
+    // Otherwise, display the next article
+    articles[currentArticleIndex].style.display = "block";
+  }
+
+  // Disable the button if we have reached the last article
+  if (currentArticleIndex >= articles.length - 1) {
+    nextRoundBtn.disabled = true;
+  }
+});
+console.log("1 ==>", quarterfinals1);
+console.log("2 ==>", quarterfinals2);
+index=0;
+let quarterfinalsA=document.getElementById("quarter-final-A");
+quarterfinals1A = quarterfinals1
+let quarterfinalsB=document.getElementById("quarter-final-B");
+quarterfinalsA.innerHTML=quarterfinals1[index].name;
+quarterfinalsB.innerHTML=quarterfinals2[index].name;
+
+
+</script>
