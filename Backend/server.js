@@ -1,27 +1,43 @@
-
-const { createPool } = require('mysql');
+const { createPool } = require('mysql2');
 const express = require('express');
 
-const app=express();
+const app = express();
 
-const databaseConfiguration={
-    Host:"127.0.0.1:3306",
-    user:"CherryArchives",
-    password:"0pdoopd0epdrfepdrf",
-    database:"internationalartists" 
+const databaseConfiguration = {
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "#Gift@90210!",
+    database: "internationalartists",
+    connectionLimit: 10
 }
 
-const connectionpool=createPool(databaseConfiguration);
+const connectionpool = createPool(databaseConfiguration);
 
-connectionpool.getConnection((error,connection) => {
-    if(error)
-    {
-        console.log("error in connection ", error.message);
-        return;
+connectionpool.query(`select * from artistprofiles where Artists_id=?`,[1], (err, results, fields) => {
+    if (err) {
+        return console.log("error in connection ", err.message);
     }
-    console.log("successfull  connection");
+    console.log(results);
 });
 
 
 
 
+
+app.post('/updateVote', (req, res) => {
+    const album = req.body.album;
+    const updateQuery = `UPDATE artistprofiles SET Votes = Votes + 1 WHERE Album = ?`;
+
+    connectionpool.query(updateQuery, [album], (err, results, fields) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        res.json({ message: 'Vote count updated successfully.' });
+    });
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});

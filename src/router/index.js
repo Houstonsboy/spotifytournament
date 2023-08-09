@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import testpage from '../views/Tournament.vue'
+import RodeoVsAstroworld from '../views/Tournament.vue'
 import LoadingDock from '@/views/LoadingDock.vue';
-import Menu from '@/views/MenuView.vue';
+import DawnFMVsAfterHours from '@/components/AfterHoursVsDawnFM.vue';
 
 const routes = [
   {
@@ -11,9 +11,9 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/testpage',
-    name: 'testpage',
-    component: testpage
+    path: '/RodeoVsAstroworld',
+    name: 'RodeoVsAstroworld',
+    component: RodeoVsAstroworld
   },
   {
     path: '/about',
@@ -29,9 +29,9 @@ const routes = [
     component: LoadingDock
   },
   {
-    path: '/Menu',
-    name: 'Menu',
-    component: Menu
+    path: '/DawnFMVsAfterHours',
+    name: 'DawnFMVsAfterHours',
+    component: DawnFMVsAfterHours
   },
 ]
 
